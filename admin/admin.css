@@ -1,13 +1,18 @@
 :root {
-  --ink: #111312;
-  --muted: #5d6661;
-  --line: #d8d8d0;
-  --paper: #fbfbf8;
+  --ink: #0d1110;
+  --ink-soft: #39433f;
+  --muted: #68716c;
+  --paper: #f7f5f0;
+  --paper-deep: #ebe6dc;
   --panel: #ffffff;
-  --green: #173d33;
+  --green: #122e27;
   --bronze: #9b6a3a;
+  --bronze-2: #c09a63;
+  --line: rgba(13, 17, 16, 0.13);
+  --line-strong: rgba(13, 17, 16, 0.24);
   --danger: #9a2f21;
-  --shadow: 0 18px 50px rgba(16, 19, 18, 0.1);
+  --shadow: 0 28px 90px rgba(13, 17, 16, 0.13);
+  --max: 1200px;
 }
 
 * {
@@ -18,7 +23,9 @@
 body {
   margin: 0;
   color: var(--ink);
-  background: var(--paper);
+  background:
+    linear-gradient(90deg, rgba(18, 46, 39, 0.07), transparent 42%),
+    var(--paper);
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
   font-size: 15px;
   line-height: 1.5;
@@ -32,19 +39,19 @@ textarea {
 }
 
 button {
-  min-height: 42px;
+  min-height: 44px;
   border: 1px solid var(--green);
-  border-radius: 6px;
+  border-radius: 4px;
   color: #ffffff;
   background: var(--green);
-  padding: 9px 13px;
-  font-weight: 800;
+  padding: 10px 14px;
+  font-weight: 900;
   cursor: pointer;
 }
 
 button.secondary,
 .item-card button {
-  border-color: var(--line);
+  border-color: var(--line-strong);
   color: var(--ink);
   background: #ffffff;
 }
@@ -59,26 +66,35 @@ input,
 select,
 textarea {
   width: 100%;
-  min-height: 44px;
+  min-height: 46px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--ink);
-  background: #ffffff;
-  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 11px 12px;
   outline: 0;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(192, 154, 99, 0.42);
+  outline-offset: 3px;
+}
+
 textarea {
-  min-height: 92px;
+  min-height: 98px;
   resize: vertical;
 }
 
 label {
   display: grid;
-  gap: 6px;
+  gap: 7px;
   color: var(--muted);
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 h1,
@@ -88,35 +104,101 @@ p {
   margin: 0;
 }
 
+h1,
+h2,
+h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
 a {
   color: var(--green);
-  font-weight: 800;
+  font-weight: 900;
   text-decoration: none;
 }
 
+.admin-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(247, 245, 240, 0.94);
+  padding: 0 max(16px, calc((100vw - var(--max)) / 2));
+  backdrop-filter: blur(18px);
+}
+
+.admin-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--ink);
+}
+
+.admin-brand span {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.admin-topbar nav {
+  display: none;
+  gap: 16px;
+  color: var(--ink-soft);
+}
+
 .admin-shell {
-  width: min(100% - 28px, 1180px);
+  width: min(100% - 32px, var(--max));
   margin: 0 auto;
-  padding: 28px 0 60px;
+  padding: 42px 0 64px;
 }
 
 .admin-header {
   display: grid;
   gap: 20px;
   align-items: end;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .admin-header p {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--bronze);
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
+.admin-header p::before {
+  width: 30px;
+  height: 1px;
+  content: "";
+  background: currentColor;
+}
+
 .admin-header h1 {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 42px;
-  font-weight: 500;
+  margin-top: 10px;
+  font-size: 46px;
+}
+
+.admin-header span {
+  display: block;
+  max-width: 640px;
+  margin-top: 12px;
+  color: var(--ink-soft);
+  font-size: 17px;
 }
 
 .admin-actions,
@@ -129,22 +211,37 @@ a {
   align-items: center;
 }
 
+.admin-actions a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 10px 14px;
+}
+
 .login-panel,
 .workspace,
 .panel,
 .item-card,
 .lead-card {
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 4px;
   background: var(--panel);
   box-shadow: var(--shadow);
 }
 
 .login-panel {
   display: grid;
-  gap: 14px;
-  max-width: 620px;
-  padding: 24px;
+  gap: 15px;
+  max-width: 650px;
+  padding: 26px;
+}
+
+.login-panel h2,
+.panel-heading h2 {
+  font-size: 28px;
 }
 
 .login-panel p,
@@ -169,12 +266,12 @@ a {
   overflow-x: auto;
   border-bottom: 1px solid var(--line);
   padding: 14px;
-  background: #f1f0ea;
+  background: var(--paper-deep);
 }
 
 .tabs button {
   flex: 0 0 auto;
-  border-color: var(--line);
+  border-color: var(--line-strong);
   color: var(--ink);
   background: transparent;
 }
@@ -203,8 +300,8 @@ a {
 
 .panel-heading {
   display: grid;
-  gap: 6px;
-  margin-bottom: 18px;
+  gap: 7px;
+  margin-bottom: 20px;
 }
 
 .form-grid {
@@ -227,8 +324,14 @@ a {
 .lead-card {
   display: grid;
   gap: 14px;
-  padding: 16px;
+  padding: 18px;
   box-shadow: none;
+}
+
+.item-card {
+  background:
+    linear-gradient(90deg, rgba(192, 154, 99, 0.08), transparent 32%),
+    #ffffff;
 }
 
 .item-header {
@@ -237,7 +340,7 @@ a {
 }
 
 .item-header h3 {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .nested-grid {
@@ -253,7 +356,7 @@ a {
 .save-status {
   min-height: 24px;
   margin-top: 16px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .save-status.is-error,
@@ -264,16 +367,20 @@ a {
 .lead-card time {
   color: var(--muted);
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 @media (min-width: 760px) {
+  .admin-topbar nav {
+    display: flex;
+  }
+
   .admin-header {
     grid-template-columns: 1fr auto;
   }
 
   .workspace {
-    grid-template-columns: 210px 1fr;
+    grid-template-columns: 220px 1fr;
   }
 
   .tabs {
@@ -284,16 +391,11 @@ a {
   }
 
   .panel {
-    padding: 28px;
+    padding: 30px;
   }
 
   .form-grid,
   .inline-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .item-header {
-    grid-template-columns: 1fr auto;
-    align-items: center;
   }
 }
