@@ -2,6 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { createLead, getContent, getLeads, saveContent } = require("./lib/storage.cjs");
+const { notifyLeadSafely } = require("./lib/email.cjs");
 const { adminPassword, isAuthorized, readJsonBody, sendError, sendJson } = require("./lib/http.cjs");
 
 const root = __dirname;
@@ -72,7 +73,8 @@ async function handleApi(request, response, url) {
   }
 
   if (url.pathname === "/api/leads" && request.method === "POST") {
-    await createLead(await readJsonBody(request));
+    const savedLead = await createLead(await readJsonBody(request));
+    await notifyLeadSafely(savedLead);
     sendJson(response, 201, { ok: true });
     return true;
   }

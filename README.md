@@ -61,6 +61,16 @@ Vercel needs these environment variables:
 MONGODB_URI
 MONGODB_DB
 ADMIN_PASSWORD
+BREVO_API_KEY
+BREVO_SENDER_EMAIL
+BREVO_SENDER_NAME
+LEAD_NOTIFY_EMAIL
 ```
+
+Brevo notes:
+
+- `BREVO_SENDER_EMAIL` must be a sender verified in Brevo.
+- `LEAD_NOTIFY_EMAIL` is where consultation requests are sent.
+- Leads are still saved if the email provider is unavailable.
 
 Do not commit real secrets to the repository.

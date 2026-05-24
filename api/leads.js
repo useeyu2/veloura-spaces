@@ -1,11 +1,13 @@
 const { createLead, getLeads } = require("../lib/storage.cjs");
+const { notifyLeadSafely } = require("../lib/email.cjs");
 const { isAuthorized, readJsonBody, sendError, sendJson } = require("../lib/http.cjs");
 
 module.exports = async function handler(request, response) {
   try {
     if (request.method === "POST") {
       const lead = await readJsonBody(request);
-      await createLead(lead);
+      const savedLead = await createLead(lead);
+      await notifyLeadSafely(savedLead);
       sendJson(response, 201, { ok: true });
       return;
     }
