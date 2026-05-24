@@ -207,6 +207,7 @@ a {
 
 .admin-actions,
 .login-row,
+.upload-row,
 .list-actions,
 .item-actions {
   display: flex;
@@ -217,6 +218,31 @@ a {
 
 .login-row input {
   flex: 1 1 260px;
+}
+
+.field-shell {
+  display: grid;
+  gap: 10px;
+}
+
+.file-control {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.upload-row {
+  justify-content: flex-start;
+}
+
+.image-preview {
+  width: 86px;
+  height: 58px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  object-fit: cover;
 }
 
 .admin-actions a {

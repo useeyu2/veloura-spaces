@@ -114,19 +114,41 @@ async function logout() {
   lock("Signed out.");
 }
 
+function uploadControl(path, options, value) {
+  if (!options.upload) return "";
+
+  const inputId = `upload-${path.replace(/[^a-z0-9]/gi, "-")}`;
+  const array = options.array ? " data-upload-array=\"true\"" : "";
+  const preview = !options.array && value
+    ? `<img class="image-preview" src="${escapeHtml(value)}" alt="">`
+    : "";
+
+  return `
+    <div class="upload-row">
+      <input id="${inputId}" class="file-control" type="file" accept="image/*" data-upload-path="${path}"${array}>
+      <button type="button" class="secondary" data-upload-trigger>Upload image</button>
+      ${preview}
+    </div>
+  `;
+}
+
 function field(path, label, options = {}) {
   const value = getPath(path);
   const type = options.type || "text";
   const wide = options.wide ? " field-wide" : "";
+  const fieldClass = `${wide.trim()}${options.upload ? " field-shell" : ""}`.trim();
   const array = options.array ? " data-array=\"true\"" : "";
 
   if (type === "textarea") {
     const textareaValue = options.array ? (Array.isArray(value) ? value.join("\n") : "") : value;
     return `
-      <label class="${wide.trim()}">
-        ${escapeHtml(label)}
-        <textarea data-path="${path}"${array}>${escapeHtml(textareaValue)}</textarea>
-      </label>
+      <div class="${fieldClass}">
+        <label>
+          ${escapeHtml(label)}
+          <textarea data-path="${path}"${array}>${escapeHtml(textareaValue)}</textarea>
+        </label>
+        ${uploadControl(path, options, value)}
+      </div>
     `;
   }
 
@@ -152,10 +174,13 @@ function field(path, label, options = {}) {
   }
 
   return `
-    <label class="${wide.trim()}">
-      ${escapeHtml(label)}
-      <input type="${type}" value="${escapeHtml(value)}" data-path="${path}">
-    </label>
+    <div class="${fieldClass}">
+      <label>
+        ${escapeHtml(label)}
+        <input type="${type}" value="${escapeHtml(value)}" data-path="${path}">
+      </label>
+      ${uploadControl(path, options, value)}
+    </div>
   `;
 }
 
@@ -170,13 +195,13 @@ function renderSiteFields() {
     ${field("brand.tagline", "Footer tagline", { type: "textarea", wide: true })}
     ${field("seo.title", "SEO title", { wide: true })}
     ${field("seo.description", "SEO description", { type: "textarea", wide: true })}
-    ${field("seo.ogImage", "Social preview image URL", { wide: true })}
+    ${field("seo.ogImage", "Social preview image URL", { wide: true, upload: true })}
     ${field("hero.eyebrow", "Hero eyebrow")}
     ${field("hero.title", "Hero title")}
     ${field("hero.copy", "Hero copy", { type: "textarea", wide: true })}
     ${field("hero.primaryCta", "Primary CTA")}
     ${field("hero.secondaryCta", "Secondary CTA")}
-    ${field("hero.image", "Hero image URL", { wide: true })}
+    ${field("hero.image", "Hero image URL", { wide: true, upload: true })}
     ${field("hero.metrics.0.value", "Metric 1 value")}
     ${field("hero.metrics.0.label", "Metric 1 label")}
     ${field("hero.metrics.1.value", "Metric 2 value")}
@@ -248,15 +273,15 @@ function renderProjects() {
       </div>
       ${field(`projects.${index}.summary`, "Card summary", { type: "textarea", wide: true })}
       ${field(`projects.${index}.caseSummary`, "Case study summary", { type: "textarea", wide: true })}
-      ${field(`projects.${index}.image`, "Card image URL", { wide: true })}
-      ${field(`projects.${index}.heroImage`, "Case hero image URL", { wide: true })}
+      ${field(`projects.${index}.image`, "Card image URL", { wide: true, upload: true })}
+      ${field(`projects.${index}.heroImage`, "Case hero image URL", { wide: true, upload: true })}
       ${field(`projects.${index}.alt`, "Image alt text", { wide: true })}
       ${field(`projects.${index}.brief`, "Brief", { type: "textarea", wide: true })}
       ${field(`projects.${index}.execution`, "Execution", { type: "textarea", wide: true })}
       ${field(`projects.${index}.facts`, "Facts, one per line", { type: "textarea", wide: true, array: true })}
       ${field(`projects.${index}.details`, "Selected details, one per line", { type: "textarea", wide: true, array: true })}
       ${field(`projects.${index}.outcomes`, "Outcomes, one per line", { type: "textarea", wide: true, array: true })}
-      ${field(`projects.${index}.gallery`, "Gallery image URLs, one per line", { type: "textarea", wide: true, array: true })}
+      ${field(`projects.${index}.gallery`, "Gallery image URLs, one per line", { type: "textarea", wide: true, array: true, upload: true })}
     </article>
   `).join("");
 }
@@ -356,6 +381,43 @@ async function loadLeads() {
   `).join("") : "<p>No leads captured yet.</p>";
 }
 
+async function uploadImage(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+
+  const path = input.dataset.uploadPath;
+  const formData = new FormData();
+  formData.append("file", file);
+  setStatus(`Uploading ${file.name}...`);
+
+  const response = await fetchAdmin("/api/media/upload", {
+    method: "POST",
+    body: formData
+  });
+  const payload = await response.json().catch(() => ({}));
+  input.value = "";
+
+  if (response.status === 401) {
+    lock("Your session expired. Sign in again.", true);
+    return;
+  }
+
+  if (!response.ok) {
+    setStatus(payload.error || "Unable to upload image.", true);
+    return;
+  }
+
+  if (input.dataset.uploadArray === "true") {
+    const current = Array.isArray(getPath(path)) ? getPath(path) : [];
+    setPath(path, [...current, payload.url]);
+  } else {
+    setPath(path, payload.url);
+  }
+
+  renderAll();
+  setStatus("Image uploaded. Save changes to publish it.");
+}
+
 document.addEventListener("input", (event) => {
   const target = event.target;
   const path = target.dataset.path;
@@ -378,6 +440,11 @@ document.addEventListener("input", (event) => {
 document.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
+
+  if (button.matches("[data-upload-trigger]")) {
+    button.closest(".upload-row")?.querySelector("[data-upload-path]")?.click();
+    return;
+  }
 
   if (button.matches("[data-save]")) {
     saveContent();
@@ -462,6 +529,12 @@ document.addEventListener("click", (event) => {
   if (action === "move-testimonial-up") swapItem(content.testimonials, index, -1);
   if (action === "move-testimonial-down") swapItem(content.testimonials, index, 1);
   if (action?.includes("testimonial")) renderTestimonials();
+});
+
+document.addEventListener("change", (event) => {
+  const target = event.target;
+  if (!target.matches("[data-upload-path]")) return;
+  uploadImage(target).catch((error) => setStatus(error.message, true));
 });
 
 loginForm.addEventListener("submit", (event) => {

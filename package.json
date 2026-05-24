@@ -5,7 +5,7 @@
   "description": "Premium construction and interior design website with a lightweight local CMS backend.",
   "scripts": {
     "start": "node local-server.cjs",
-    "check": "node --check local-server.cjs && node --check script.js && node --check case-study.js && node --check admin/admin.js && node --check api/content.js && node --check api/leads.js && node --check api/auth/login.js && node --check api/auth/logout.js && node --check api/auth/session.js && node --check lib/http.cjs && node --check lib/email.cjs && node --check lib/storage.cjs"
+    "check": "node --check local-server.cjs && node --check script.js && node --check case-study.js && node --check admin/admin.js && node --check api/content.js && node --check api/leads.js && node --check api/auth/login.js && node --check api/auth/logout.js && node --check api/auth/session.js && node --check api/media/upload.js && node --check lib/http.cjs && node --check lib/email.cjs && node --check lib/storage.cjs && node --check lib/cloudinary.cjs"
   },
   "dependencies": {
     "mongodb": "^6.21.0"

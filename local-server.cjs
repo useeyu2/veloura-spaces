@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { createLead, getContent, getLeads, saveContent } = require("./lib/storage.cjs");
 const { notifyLeadSafely } = require("./lib/email.cjs");
+const { uploadImageFromRequest } = require("./lib/cloudinary.cjs");
 const {
   adminPassword,
   clearAdminSessionCookie,
@@ -86,6 +87,16 @@ async function handleApi(request, response, url) {
   if (url.pathname === "/api/auth/logout" && request.method === "POST") {
     clearAdminSessionCookie(response);
     sendJson(response, 200, { ok: true });
+    return true;
+  }
+
+  if (url.pathname === "/api/media/upload" && request.method === "POST") {
+    if (!isAuthorized(request.headers)) {
+      sendJson(response, 401, { error: "Unauthorized" });
+      return true;
+    }
+
+    sendJson(response, 201, await uploadImageFromRequest(request));
     return true;
   }
 

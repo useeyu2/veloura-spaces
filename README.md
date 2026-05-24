@@ -68,6 +68,10 @@ BREVO_API_KEY
 BREVO_SENDER_EMAIL
 BREVO_SENDER_NAME
 LEAD_NOTIFY_EMAIL
+CLOUDINARY_CLOUD_NAME
+CLOUDINARY_API_KEY
+CLOUDINARY_API_SECRET
+CLOUDINARY_UPLOAD_FOLDER
 ```
 
 Brevo notes:
@@ -75,5 +79,11 @@ Brevo notes:
 - `BREVO_SENDER_EMAIL` must be a sender verified in Brevo.
 - `LEAD_NOTIFY_EMAIL` is where consultation requests are sent.
 - Leads are still saved if the email provider is unavailable.
+
+Cloudinary notes:
+
+- `CLOUDINARY_CLOUD_NAME` is the account cloud name, not the API key label.
+- `CLOUDINARY_UPLOAD_FOLDER` is optional and defaults to `veloura-spaces`.
+- Image uploads are available only after an admin signs in.
 
 Do not commit real secrets to the repository.
