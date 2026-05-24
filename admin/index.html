@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Veloura Spaces Admin</title>
+    <link rel="stylesheet" href="admin.css">
+  </head>
+  <body>
+    <main class="admin-shell">
+      <header class="admin-header">
+        <div>
+          <p>Veloura Spaces</p>
+          <h1>Website Admin</h1>
+        </div>
+        <div class="admin-actions">
+          <a href="/" target="_blank" rel="noreferrer">View site</a>
+          <button type="button" data-save>Save changes</button>
+        </div>
+      </header>
+
+      <section class="login-panel" data-login-panel>
+        <h2>Admin access</h2>
+        <p>Enter the local admin password to edit website content.</p>
+        <div class="login-row">
+          <input type="password" placeholder="Admin password" data-admin-token>
+          <button type="button" data-unlock>Unlock</button>
+        </div>
+        <p class="status" data-login-status></p>
+      </section>
+
+      <section class="workspace" data-workspace hidden>
+        <aside class="tabs" aria-label="Admin sections">
+          <button class="is-active" type="button" data-tab="site">Site</button>
+          <button type="button" data-tab="services">Services</button>
+          <button type="button" data-tab="projects">Projects</button>
+          <button type="button" data-tab="testimonials">Testimonials</button>
+          <button type="button" data-tab="leads">Leads</button>
+        </aside>
+
+        <div class="panels">
+          <section class="panel is-active" data-panel="site" aria-label="Site settings">
+            <div class="panel-heading">
+              <h2>Site content</h2>
+              <p>Edit brand, hero, vision, and contact content.</p>
+            </div>
+            <div class="form-grid" data-site-fields></div>
+          </section>
+
+          <section class="panel" data-panel="services" aria-label="Services">
+            <div class="panel-heading">
+              <h2>Services</h2>
+              <p>Add, remove, and reorder service cards shown on the homepage.</p>
+            </div>
+            <div class="list-actions">
+              <button type="button" data-add-service>Add service</button>
+            </div>
+            <div class="item-list" data-services-list></div>
+          </section>
+
+          <section class="panel" data-panel="projects" aria-label="Projects">
+            <div class="panel-heading">
+              <h2>Projects</h2>
+              <p>Manage homepage cards and dynamic case-study content.</p>
+            </div>
+            <div class="list-actions">
+              <button type="button" data-add-project>Add project</button>
+            </div>
+            <div class="item-list" data-projects-list></div>
+          </section>
+
+          <section class="panel" data-panel="testimonials" aria-label="Testimonials">
+            <div class="panel-heading">
+              <h2>Testimonials</h2>
+              <p>Manage social proof shown on the homepage.</p>
+            </div>
+            <div class="list-actions">
+              <button type="button" data-add-testimonial>Add testimonial</button>
+            </div>
+            <div class="item-list" data-testimonials-list></div>
+          </section>
+
+          <section class="panel" data-panel="leads" aria-label="Leads">
+            <div class="panel-heading">
+              <h2>Leads</h2>
+              <p>Consultation submissions captured by the local backend.</p>
+            </div>
+            <div class="list-actions">
+              <button type="button" data-refresh-leads>Refresh leads</button>
+            </div>
+            <div class="lead-list" data-leads-list></div>
+          </section>
+        </div>
+      </section>
+
+      <p class="save-status" role="status" aria-live="polite" data-status></p>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

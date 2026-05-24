@@ -1,0 +1,10 @@
+{
+  "name": "veloura-spaces",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Premium construction and interior design website with a lightweight local CMS backend.",
+  "scripts": {
+    "start": "node local-server.cjs",
+    "check": "node --check local-server.cjs && node --check script.js && node --check case-study.js && node --check admin/admin.js"
+  }
+}

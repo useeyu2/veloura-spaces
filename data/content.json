@@ -1,0 +1,225 @@
+{
+  "brand": {
+    "name": "Veloura Spaces",
+    "initials": "VS",
+    "email": "hello@velouraspaces.com",
+    "phone": "+234 000 000 0000",
+    "phoneHref": "+2340000000000",
+    "tagline": "Premium construction and interior architecture for high-value residential and commercial spaces."
+  },
+  "seo": {
+    "title": "Veloura Spaces | Premium Construction and Interior Design",
+    "description": "Veloura Spaces delivers premium construction, interior architecture, commercial fit-outs, and private client project delivery.",
+    "ogImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=86"
+  },
+  "hero": {
+    "eyebrow": "Luxury construction and interior architecture",
+    "title": "Veloura Spaces",
+    "copy": "We design and build refined residential, commercial, and hospitality spaces with disciplined project delivery and atelier-level detailing.",
+    "primaryCta": "Schedule a consultation",
+    "secondaryCta": "View case studies",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=88",
+    "metrics": [
+      {
+        "value": "42",
+        "label": "Private and commercial projects"
+      },
+      {
+        "value": "11",
+        "label": "Years of build experience"
+      },
+      {
+        "value": "98%",
+        "label": "Client referral rate"
+      }
+    ]
+  },
+  "vision": {
+    "kicker": "The vision",
+    "title": "Craft, capital, and construction discipline in one studio.",
+    "body": "Veloura Spaces is built for clients who expect precision at every touchpoint. We align concept, procurement, construction, and final styling so each decision serves the architecture, the budget, and the way the space will actually be used.",
+    "panel": "Our process keeps the experience calm: one accountable team, clear milestones, rigorous material control, and execution details that hold up long after handover."
+  },
+  "servicesIntro": {
+    "eyebrow": "Services portfolio",
+    "title": "Integrated delivery for high-value spaces.",
+    "copy": "Choose a single service or appoint us to lead the full journey from first concept through construction completion."
+  },
+  "services": [
+    {
+      "title": "Luxury Residential Construction",
+      "copy": "Ground-up homes, structural upgrades, villa renovations, extensions, and premium finishing programs.",
+      "cta": "Start a private build"
+    },
+    {
+      "title": "Bespoke Interior Architecture",
+      "copy": "Space planning, joinery, lighting, material palettes, furniture specification, and final styling.",
+      "cta": "Refine an interior"
+    },
+    {
+      "title": "Commercial Fit-Outs",
+      "copy": "Hospitality, retail, office, and showroom environments planned for brand presence and daily operation.",
+      "cta": "Plan a fit-out"
+    },
+    {
+      "title": "Project Management",
+      "copy": "Budget tracking, procurement, site coordination, contractor oversight, and quality control.",
+      "cta": "Control delivery risk"
+    }
+  ],
+  "projectsIntro": {
+    "eyebrow": "Gallery and case studies",
+    "title": "A visual directory of completed environments."
+  },
+  "projects": [
+    {
+      "slug": "lakeview-private-residence",
+      "category": "residential",
+      "label": "Residential construction",
+      "title": "Lakeview Private Residence",
+      "summary": "Ground-up build, facade detailing, landscape interface",
+      "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=86",
+      "heroImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=88",
+      "alt": "Modern luxury home exterior with clean architectural lines",
+      "scope": "Ground-up build",
+      "timeline": "14 months",
+      "role": "Design and delivery",
+      "sector": "Private residential",
+      "caseSummary": "A ground-up private residence shaped around quiet arrival, durable materials, and a construction program that protected quality from foundation to final styling.",
+      "facts": [
+        "Primary service: Luxury Residential Construction",
+        "Design language: Warm minimal, stone, glass, timber",
+        "Client priority: Privacy, durability, and controlled handover"
+      ],
+      "brief": "The client wanted a residence that felt private, composed, and built for long-term ownership. The challenge was to create a refined architectural presence while keeping the build sequence realistic and controlled.",
+      "execution": "Early attention went into structure, waterproofing, glazing, and exterior junctions so the visible finish would not be compromised by late site decisions. Interior materials were specified alongside build milestones to reduce procurement risk.",
+      "details": [
+        "Large-format stone thresholds and refined exterior cladding.",
+        "Layered lighting for circulation, entertaining, and private zones.",
+        "Custom storage and joinery designed around daily household flow."
+      ],
+      "outcomes": [
+        "Single accountable delivery team from concept to closeout.",
+        "Facade and landscape details coordinated before exterior works began.",
+        "Final interiors completed with a controlled punch-list process."
+      ],
+      "gallery": [
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=86",
+        "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1400&q=86"
+      ]
+    },
+    {
+      "slug": "park-house-living-suite",
+      "category": "interior",
+      "label": "Interior architecture",
+      "title": "Park House Living Suite",
+      "summary": "Material palette, lighting plan, custom furniture",
+      "image": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=86",
+      "heroImage": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2400&q=88",
+      "alt": "Luxury living room with tailored furniture and warm materials",
+      "scope": "Interior suite",
+      "timeline": "18 weeks",
+      "role": "Interior design",
+      "sector": "Private residential",
+      "caseSummary": "A layered living environment designed for entertaining, quiet family routines, and a refined material experience without visual excess.",
+      "facts": [
+        "Primary service: Bespoke Interior Architecture",
+        "Design language: Soft modern, walnut, linen, limestone",
+        "Client priority: Comfort, storage, and a mature palette"
+      ],
+      "brief": "The client wanted a living suite that could move between private downtime and formal hosting. The space needed warmth, acoustic control, display storage, and furniture that felt tailored to the room.",
+      "execution": "The plan separated conversation, dining, and media without closing the room. A restrained material palette allowed the architectural details to carry the luxury, while lighting scenes gave the suite different evening moods.",
+      "details": [
+        "Integrated media wall with concealed cabling and storage.",
+        "Warm timber, textured upholstery, and quiet metal accents.",
+        "Layered lighting with task, ambient, and feature circuits."
+      ],
+      "outcomes": [
+        "Improved circulation between lounge, dining, and media zones.",
+        "Furniture, lighting, and surface finishes specified as one system.",
+        "Custom joinery added concealed storage without visual heaviness."
+      ],
+      "gallery": [
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=86",
+        "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1400&q=86"
+      ]
+    },
+    {
+      "slug": "atelier-work-lounge",
+      "category": "commercial",
+      "label": "Commercial fit-out",
+      "title": "Atelier Work Lounge",
+      "summary": "Workplace planning, acoustic zones, hospitality finish",
+      "image": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=86",
+      "heroImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2400&q=88",
+      "alt": "Refined office lounge with modern seating and natural light",
+      "scope": "Office lounge fit-out",
+      "timeline": "12 weeks",
+      "role": "Design and fit-out",
+      "sector": "Commercial workplace",
+      "caseSummary": "A commercial lounge that blends workplace efficiency with hospitality warmth for client meetings, focused work, and team rituals.",
+      "facts": [
+        "Primary service: Commercial Fit-Outs",
+        "Design language: Hospitality office, quiet luxury",
+        "Client priority: Brand presence and daily usability"
+      ],
+      "brief": "The client needed a workplace area that could support practical operations while presenting a premium face to visiting partners. The space needed to feel calm, not corporate.",
+      "execution": "The design separated high-energy team functions from quieter work settings with furniture placement, acoustic treatments, and layered lighting. Material selections were chosen for resilience without losing hospitality character.",
+      "details": [
+        "Reception-style lounge seating with commercial-grade upholstery.",
+        "Acoustic panels integrated into the visual language of the room.",
+        "Warm lighting scenes for day work and evening hosting."
+      ],
+      "outcomes": [
+        "Defined zones for calls, informal meetings, and client hosting.",
+        "Durable materials specified for high daily use.",
+        "Lighting and acoustic decisions improved comfort across the space."
+      ],
+      "gallery": [
+        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=86",
+        "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1400&q=86"
+      ]
+    }
+  ],
+  "process": [
+    {
+      "title": "Discovery and feasibility",
+      "copy": "We clarify scope, ambition, constraints, budget range, approvals, and the level of service required."
+    },
+    {
+      "title": "Concept and specification",
+      "copy": "Design direction, drawings, finishes, lighting, joinery, and procurement paths are consolidated before build activity expands."
+    },
+    {
+      "title": "Construction control",
+      "copy": "Site activity is managed through documented milestones, supplier coordination, quality checks, and transparent reporting."
+    },
+    {
+      "title": "Handover and refinement",
+      "copy": "We complete punch lists, final styling, care notes, and the last details that make a space feel finished."
+    }
+  ],
+  "testimonialsIntro": {
+    "eyebrow": "Client testimonials",
+    "title": "Trusted by clients who need taste and execution."
+  },
+  "testimonials": [
+    {
+      "quote": "Veloura managed the build with the seriousness of a capital project and the sensitivity of a design studio. The result feels exact, not overworked.",
+      "name": "Amara C.",
+      "role": "Private residence client",
+      "dark": false
+    },
+    {
+      "quote": "They translated our hospitality brand into a physical environment without losing operational practicality. The fit-out opened on schedule.",
+      "name": "Tunde A.",
+      "role": "Boutique hospitality founder",
+      "dark": true
+    }
+  ],
+  "contact": {
+    "eyebrow": "Consultation booking",
+    "title": "Tell us what you are building.",
+    "copy": "Share the basics and we will respond with the right next step: feasibility review, site visit, design consultation, or project scoping."
+  }
+}
