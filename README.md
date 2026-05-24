@@ -12,6 +12,8 @@ Static premium website for a construction and interior design studio.
 - `admin/` - admin panel for editing website content and reviewing leads.
 - `data/content.json` - local content database used by the backend.
 - `local-server.cjs` - local backend and static server.
+- `api/` - Vercel serverless API routes for content and leads.
+- `lib/` - shared storage and HTTP helpers.
 
 ## Run
 
@@ -41,8 +43,24 @@ Set a stronger password when running locally:
 ADMIN_PASSWORD="your-strong-password" npm start
 ```
 
-The consultation form validates required fields and saves leads to `data/leads.json` when the backend is running. If the backend is unavailable, it falls back to opening a prefilled email to the configured business email.
+MongoDB storage:
+
+```bash
+copy .env.example .env
+```
+
+Then put your real `MONGODB_URI`, `MONGODB_DB`, and `ADMIN_PASSWORD` values in `.env`.
+
+The consultation form validates required fields and saves leads to MongoDB when `MONGODB_URI` is configured. Without MongoDB, it saves to `data/leads.json` locally. If the backend is unavailable, it falls back to opening a prefilled email to the configured business email.
 
 ## Production note
 
-The local backend stores edits in JSON files. That works for developer testing, but Vercel does not provide persistent file storage for serverless deployments. For a live admin panel, connect the same content API to a persistent database such as Supabase Postgres.
+Vercel needs these environment variables:
+
+```text
+MONGODB_URI
+MONGODB_DB
+ADMIN_PASSWORD
+```
+
+Do not commit real secrets to the repository.
