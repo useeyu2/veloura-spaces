@@ -20,6 +20,10 @@
   letter-spacing: 0;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   color: var(--ink);
@@ -209,6 +213,10 @@ a {
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+}
+
+.login-row input {
+  flex: 1 1 260px;
 }
 
 .admin-actions a {

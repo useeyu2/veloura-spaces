@@ -1,11 +1,13 @@
 let content = null;
-let adminToken = localStorage.getItem("velouraAdminToken") || "";
+localStorage.removeItem("velouraAdminToken");
 
 const loginPanel = document.querySelector("[data-login-panel]");
 const workspace = document.querySelector("[data-workspace]");
 const statusNode = document.querySelector("[data-status]");
 const loginStatus = document.querySelector("[data-login-status]");
-const tokenInput = document.querySelector("[data-admin-token]");
+const loginForm = document.querySelector("[data-login-form]");
+const passwordInput = document.querySelector("[data-admin-password]");
+const authActions = document.querySelectorAll("[data-auth-action]");
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -37,6 +39,79 @@ function setPath(path, value) {
 function setStatus(message, isError = false) {
   statusNode.textContent = message;
   statusNode.classList.toggle("is-error", isError);
+}
+
+function setLoginStatus(message, isError = false) {
+  loginStatus.textContent = message;
+  loginStatus.classList.toggle("is-error", isError);
+}
+
+function setAuthenticated(isAuthenticated) {
+  loginPanel.hidden = isAuthenticated;
+  workspace.hidden = !isAuthenticated;
+  authActions.forEach((element) => {
+    element.hidden = !isAuthenticated;
+  });
+}
+
+function lock(message = "", isError = false) {
+  content = null;
+  setAuthenticated(false);
+  setStatus("");
+  setLoginStatus(message, isError);
+  passwordInput.value = "";
+  passwordInput.focus();
+}
+
+async function fetchAdmin(path, options = {}) {
+  return fetch(path, {
+    credentials: "same-origin",
+    ...options,
+    headers: {
+      ...(options.headers || {})
+    }
+  });
+}
+
+async function checkSession() {
+  const response = await fetchAdmin("/api/auth/session");
+  const payload = await response.json().catch(() => ({}));
+
+  if (payload.authenticated) {
+    setAuthenticated(true);
+    setStatus("Admin session active.");
+    await loadContent();
+    return;
+  }
+
+  lock();
+}
+
+async function login() {
+  setLoginStatus("Checking password...");
+
+  const response = await fetchAdmin("/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: passwordInput.value })
+  });
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    setLoginStatus(payload.error || "Unable to unlock admin.", true);
+    return;
+  }
+
+  passwordInput.value = "";
+  setLoginStatus("");
+  setAuthenticated(true);
+  setStatus("Admin unlocked.");
+  await loadContent();
+}
+
+async function logout() {
+  await fetchAdmin("/api/auth/logout", { method: "POST" });
+  lock("Signed out.");
 }
 
 function field(path, label, options = {}) {
@@ -222,7 +297,7 @@ function swapItem(list, index, direction) {
 }
 
 async function loadContent() {
-  const response = await fetch("/api/content");
+  const response = await fetchAdmin("/api/content");
   if (!response.ok) throw new Error("Unable to load content.");
   content = await response.json();
   renderAll();
@@ -230,16 +305,18 @@ async function loadContent() {
 
 async function saveContent() {
   setStatus("Saving changes...");
-  const response = await fetch("/api/content", {
+  const response = await fetchAdmin("/api/content", {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "x-admin-token": adminToken
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(content)
   });
 
   const payload = await response.json().catch(() => ({}));
+
+  if (response.status === 401) {
+    lock("Your session expired. Sign in again.", true);
+    return;
+  }
 
   if (!response.ok) {
     setStatus(payload.error || "Unable to save changes.", true);
@@ -254,11 +331,14 @@ async function loadLeads() {
   const target = document.querySelector("[data-leads-list]");
   target.innerHTML = "<p>Loading leads...</p>";
 
-  const response = await fetch("/api/leads", {
-    headers: { "x-admin-token": adminToken }
-  });
+  const response = await fetchAdmin("/api/leads");
 
   if (!response.ok) {
+    if (response.status === 401) {
+      lock("Your session expired. Sign in again.", true);
+      return;
+    }
+
     target.innerHTML = "<p>Unable to load leads. Check the admin password.</p>";
     return;
   }
@@ -274,15 +354,6 @@ async function loadLeads() {
       <p>${escapeHtml(lead.message || "No project notes provided.")}</p>
     </article>
   `).join("") : "<p>No leads captured yet.</p>";
-}
-
-function unlock() {
-  adminToken = tokenInput.value.trim();
-  localStorage.setItem("velouraAdminToken", adminToken);
-  loginPanel.hidden = true;
-  workspace.hidden = false;
-  setStatus("Admin unlocked.");
-  loadContent().catch((error) => setStatus(error.message, true));
 }
 
 document.addEventListener("input", (event) => {
@@ -308,13 +379,13 @@ document.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
 
-  if (button.matches("[data-unlock]")) {
-    unlock();
+  if (button.matches("[data-save]")) {
+    saveContent();
     return;
   }
 
-  if (button.matches("[data-save]")) {
-    saveContent();
+  if (button.matches("[data-logout]")) {
+    logout();
     return;
   }
 
@@ -393,6 +464,9 @@ document.addEventListener("click", (event) => {
   if (action?.includes("testimonial")) renderTestimonials();
 });
 
-if (adminToken) {
-  tokenInput.value = adminToken;
-}
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  login().catch((error) => setLoginStatus(error.message, true));
+});
+
+checkSession().catch(() => lock("Sign in to continue."));

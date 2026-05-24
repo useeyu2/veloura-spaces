@@ -43,6 +43,8 @@ Set a stronger password when running locally:
 ADMIN_PASSWORD="your-strong-password" npm start
 ```
 
+The admin panel signs in with the admin password and keeps access in an HttpOnly session cookie. For production, set `ADMIN_SESSION_SECRET` to a long random value so sessions are signed separately from the password.
+
 MongoDB storage:
 
 ```bash
@@ -61,6 +63,7 @@ Vercel needs these environment variables:
 MONGODB_URI
 MONGODB_DB
 ADMIN_PASSWORD
+ADMIN_SESSION_SECRET
 BREVO_API_KEY
 BREVO_SENDER_EMAIL
 BREVO_SENDER_NAME

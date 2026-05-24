@@ -29,17 +29,18 @@
         </div>
         <div class="admin-actions">
           <a href="/" target="_blank" rel="noreferrer">View website</a>
-          <button type="button" data-save>Save changes</button>
+          <button type="button" class="secondary" data-logout data-auth-action hidden>Sign out</button>
+          <button type="button" data-save data-auth-action hidden>Save changes</button>
         </div>
       </header>
 
       <section class="login-panel" data-login-panel>
         <h2>Admin access</h2>
-        <p>Enter the local admin password to edit website content.</p>
-        <div class="login-row">
-          <input type="password" placeholder="Admin password" data-admin-token>
-          <button type="button" data-unlock>Unlock</button>
-        </div>
+        <p>Enter the admin password to start a secure editing session.</p>
+        <form class="login-row" data-login-form>
+          <input type="password" placeholder="Admin password" autocomplete="current-password" data-admin-password required>
+          <button type="submit">Unlock</button>
+        </form>
         <p class="status" data-login-status></p>
       </section>
 

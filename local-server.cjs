@@ -3,7 +3,16 @@ const fs = require("fs");
 const path = require("path");
 const { createLead, getContent, getLeads, saveContent } = require("./lib/storage.cjs");
 const { notifyLeadSafely } = require("./lib/email.cjs");
-const { adminPassword, isAuthorized, readJsonBody, sendError, sendJson } = require("./lib/http.cjs");
+const {
+  adminPassword,
+  clearAdminSessionCookie,
+  isAuthorized,
+  isValidAdminPassword,
+  readJsonBody,
+  sendError,
+  sendJson,
+  setAdminSessionCookie
+} = require("./lib/http.cjs");
 
 const root = __dirname;
 const port = Number(process.env.PORT || 5173);
@@ -56,6 +65,30 @@ function sendText(response, statusCode, text) {
 }
 
 async function handleApi(request, response, url) {
+  if (url.pathname === "/api/auth/session" && request.method === "GET") {
+    sendJson(response, 200, { authenticated: isAuthorized(request.headers) });
+    return true;
+  }
+
+  if (url.pathname === "/api/auth/login" && request.method === "POST") {
+    const { password } = await readJsonBody(request);
+
+    if (!isValidAdminPassword(password)) {
+      sendJson(response, 401, { error: "Invalid admin password." });
+      return true;
+    }
+
+    setAdminSessionCookie(response);
+    sendJson(response, 200, { ok: true });
+    return true;
+  }
+
+  if (url.pathname === "/api/auth/logout" && request.method === "POST") {
+    clearAdminSessionCookie(response);
+    sendJson(response, 200, { ok: true });
+    return true;
+  }
+
   if (url.pathname === "/api/content" && request.method === "GET") {
     sendJson(response, 200, await getContent());
     return true;
